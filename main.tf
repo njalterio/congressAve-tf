@@ -25,6 +25,12 @@ resource "aws_elastic_beanstalk_environment" "congressAve-prod" {
   name                = "congressAve-app-prod"
   application         = aws_elastic_beanstalk_application.congressAve.name
   solution_stack_name = "64bit Amazon Linux 2023 v4.2.2 running Corretto 21"
+  # Auto Scaling launch configuration
+  setting {
+    namespace = "aws:autoscaling:launchconfiguration"
+    name = "IamInstanceProfile"
+    value = "aws-elasticbeanstalk-ec2-role"
+  }
   tags = {
     Environment = "Production"
   }
@@ -34,6 +40,12 @@ resource "aws_elastic_beanstalk_environment" "congressAve-dev" {
   name                = "congressAve-app-dev"
   application         = aws_elastic_beanstalk_application.congressAve.name
   solution_stack_name = "64bit Amazon Linux 2023 v4.2.2 running Corretto 21"
+  # Auto Scaling launch configuration
+  setting {
+    namespace = "aws:autoscaling:launchconfiguration"
+    name = "IamInstanceProfile"
+    value = "aws-elasticbeanstalk-ec2-role"
+  }
   tags = {
     Environment = "Development"
   }
