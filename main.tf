@@ -99,7 +99,7 @@ resource "aws_db_instance" "congressAve-relation-db-prod" {
 }
 
 # RDS table
-resource "aws_db_instance" "congressAve-relation-db-prod" {
+resource "aws_db_instance" "congressAve-relation-db-dev" {
   db_name = "congressAveDevDb"
   engine = "mysql"
   instance_class = "db.t3.micro"
