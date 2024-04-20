@@ -23,17 +23,17 @@ resource "aws_elastic_beanstalk_application" "congressAve" {
 # Elastic Beanstalk
 resource "aws_elastic_beanstalk_environment" "congressAve-prod" {
   name                = "congressAve-app-prod"
-  application         = aws_elastic_beanstalk_application.congressAve
+  application         = aws_elastic_beanstalk_application.congressAve.name
   tags = {
-    Environment = "Prod"
+    Environment = "Production"
   }
 }
 
-resource "aws_elastic_beanstalk_environment" "congressAve-test" {
-  name                = "congressAve-app-test"
-  application         = aws_elastic_beanstalk_application.congressAve
+resource "aws_elastic_beanstalk_environment" "congressAve-dev" {
+  name                = "congressAve-app-dev"
+  application         = aws_elastic_beanstalk_application.congressAve.name
   tags = {
-    Environment = "Test"
+    Environment = "Development"
   }
 }
 
@@ -43,16 +43,16 @@ resource "aws_s3_bucket" "congressAve-s3-prod" {
 
   tags = {
     Name        = "CongressAve bucket"
-    Environment = "Prod"
+    Environment = "Production"
   }
 }
 
-resource "aws_s3_bucket" "congressAve-s3-test" {
-  bucket = "congressAve-test-bucket"
+resource "aws_s3_bucket" "congressAve-s3-dev" {
+  bucket = "congressAve-dev-bucket"
 
   tags = {
-    Name        = "CongressAve test bucket"
-    Environment = "Test"
+    Name        = "CongressAve dev bucket"
+    Environment = "Development"
   }
 }
 
@@ -60,26 +60,28 @@ resource "aws_s3_bucket" "congressAve-s3-test" {
 resource "aws_dynamodb_table" "congressAve-dynamodb-table-prod" {
   hash_key = "Id"
   name     = "CongressAve-PhotoData-Prod"
+  billing_mode     = "PAY_PER_REQUEST"
   attribute {
     name = "Id"
     type = "N"
   }
   tags = {
     Name        = "CongressAve DynamoDB"
-    Environment = "Prod"
+    Environment = "Production"
   }
 }
 
-resource "aws_dynamodb_table" "congressAve-dynamodb-table-test" {
+resource "aws_dynamodb_table" "congressAve-dynamodb-table-dev" {
   hash_key = "Id"
-  name     = "CongressAve-PhotoData-Test"
+  name     = "CongressAve-PhotoData-Dev"
+  billing_mode     = "PAY_PER_REQUEST"
   attribute {
     name = "Id"
     type = "N"
   }
   tags = {
     Name        = "CongressAve DynamoDB"
-    Environment = "Test"
+    Environment = "Development"
   }
 }
 
@@ -92,30 +94,38 @@ resource "aws_db_instance" "congressAve-relation-db-prod" {
   password = "blank"
   tags = {
     Name        = "CongressAve rdsDB"
-    Environment = "Prod"
+    Environment = "Production"
   }
 }
 
 # RDS table
-resource "aws_db_instance" "congressAve-relation-test-prod" {
-  db_name = "congressAveTestDb"
+resource "aws_db_instance" "congressAve-relation-db-prod" {
+  db_name = "congressAveDevDb"
   engine = "mysql"
   instance_class = "db.t3.micro"
   username = "admin"
   password = "blank"
   tags = {
     Name        = "CongressAve rdsDB"
-    Environment = "Test"
+    Environment = "Development"
   }
 }
 
 #Cognito Pool
 resource "aws_cognito_user_pool" "congressAve-cognito-pool-prod" {
   name = "congressAve-pool-prod"
+  tags = {
+    Name        = "CongressAve cognito user pool"
+    Environment = "Production"
+  }
 }
 
-resource "aws_cognito_user_pool" "congressAve-cognito-pool-test" {
-  name = "congressAve-pool-test"
+resource "aws_cognito_user_pool" "congressAve-cognito-pool-dev" {
+  name = "congressAve-pool-dev"
+  tags = {
+    Name        = "CongressAve cognito user pool"
+    Environment = "Development"
+  }
 }
 
 
