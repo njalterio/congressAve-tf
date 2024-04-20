@@ -24,6 +24,7 @@ resource "aws_elastic_beanstalk_application" "congressAve" {
 resource "aws_elastic_beanstalk_environment" "congressAve-prod" {
   name                = "congressAve-app-prod"
   application         = aws_elastic_beanstalk_application.congressAve.name
+  solution_stack_name = "64bit Amazon Linux 2023 v4.2.2 running Corretto 21"
   tags = {
     Environment = "Production"
   }
@@ -32,6 +33,7 @@ resource "aws_elastic_beanstalk_environment" "congressAve-prod" {
 resource "aws_elastic_beanstalk_environment" "congressAve-dev" {
   name                = "congressAve-app-dev"
   application         = aws_elastic_beanstalk_application.congressAve.name
+  solution_stack_name = "64bit Amazon Linux 2023 v4.2.2 running Corretto 21"
   tags = {
     Environment = "Development"
   }
@@ -39,7 +41,7 @@ resource "aws_elastic_beanstalk_environment" "congressAve-dev" {
 
 # S3
 resource "aws_s3_bucket" "congressAve-s3-prod" {
-  bucket = "congressAve-prod-bucket"
+  bucket = "congressave-prod-bucket"
 
   tags = {
     Name        = "CongressAve bucket"
@@ -48,7 +50,7 @@ resource "aws_s3_bucket" "congressAve-s3-prod" {
 }
 
 resource "aws_s3_bucket" "congressAve-s3-dev" {
-  bucket = "congressAve-dev-bucket"
+  bucket = "congressave-dev-bucket"
 
   tags = {
     Name        = "CongressAve dev bucket"
@@ -90,6 +92,7 @@ resource "aws_db_instance" "congressAve-relation-db-prod" {
   db_name = "congressAveProdDb"
   engine = "mysql"
   instance_class = "db.t3.micro"
+  allocated_storage    = 10
   username = "admin"
   password = "blank"
   tags = {
@@ -103,6 +106,7 @@ resource "aws_db_instance" "congressAve-relation-db-dev" {
   db_name = "congressAveDevDb"
   engine = "mysql"
   instance_class = "db.t3.micro"
+  allocated_storage    = 10
   username = "admin"
   password = "blank"
   tags = {
