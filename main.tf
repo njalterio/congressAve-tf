@@ -22,6 +22,14 @@ resource "aws_default_vpc" "default" {
   }
 }
 
+resource "aws_default_subnet" "default_az1" {
+  availability_zone = "us-east-2a"
+
+  tags = {
+    Name = "Default subnet for us-east-2a"
+  }
+}
+
 resource "aws_elastic_beanstalk_application" "congressAve" {
   name        = "congressAve-app"
 }
@@ -112,7 +120,7 @@ resource "aws_db_instance" "congressAve-relation-db-prod" {
   instance_class = "db.t3.micro"
   allocated_storage    = 10
   username = "admin"
-  password = "blank"
+  password = "blankpassword"
   tags = {
     Name        = "CongressAve rdsDB"
     Environment = "Production"
@@ -126,7 +134,7 @@ resource "aws_db_instance" "congressAve-relation-db-dev" {
   instance_class = "db.t3.micro"
   allocated_storage    = 10
   username = "admin"
-  password = "blank"
+  password = "blankpassword"
   tags = {
     Name        = "CongressAve rdsDB"
     Environment = "Development"
