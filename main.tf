@@ -120,21 +120,20 @@ resource "aws_db_instance" "congressAve-relation-db-prod" {
   instance_class = "db.t3.micro"
   allocated_storage    = 10
   username = "admin"
-  password = "blankpassword"
+  password = "sdj9fwdDFf"
   tags = {
     Name        = "CongressAve rdsDB"
     Environment = "Production"
   }
 }
 
-# RDS table
 resource "aws_db_instance" "congressAve-relation-db-dev" {
   db_name = "congressAveDevDb"
   engine = "mysql"
   instance_class = "db.t3.micro"
   allocated_storage    = 10
   username = "admin"
-  password = "blankpassword"
+  password = "sdj9fwdDFf"
   tags = {
     Name        = "CongressAve rdsDB"
     Environment = "Development"
